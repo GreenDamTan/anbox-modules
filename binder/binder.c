@@ -6169,6 +6169,9 @@ static int __init init_binder_device(const char *name)
 	binder_device->miscdev.fops = &binder_fops;
 	binder_device->miscdev.minor = MISC_DYNAMIC_MINOR;
 	binder_device->miscdev.name = name;
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,6,0)
+    binder_device->miscdev.mode  = 0777;
+#endif
 
 	refcount_set(&binder_device->ref, 1);
 	binder_device->context.binder_context_mgr_uid = INVALID_UID;
